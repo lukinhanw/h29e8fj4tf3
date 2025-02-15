@@ -1,23 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Tv } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Tv, UserCircle2 } from 'lucide-react';
 
 export function Cabecalho() {
   const [menuAberto, setMenuAberto] = React.useState(false);
+  const location = useLocation();
 
   const scrollToPlanos = () => {
-    const planosSection = document.getElementById('planos');
-    if (planosSection) {
-      planosSection.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname === '/') {
+      const planosSection = document.getElementById('planos');
+      if (planosSection) {
+        planosSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.location.href = '/#planos';
     }
   };
 
   return (
     <header className="bg-white border-b border-secondary-100 sticky top-0 z-50 shadow-sm">
-      <nav className="container mx-auto px-4 py-4">
+      <nav className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <Tv size={32} className="text-primary-600" />
+            <Tv size={28} className="text-primary-600" />
             <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 text-transparent bg-clip-text">
               IPTV Pro
             </span>
@@ -48,12 +53,10 @@ export function Cabecalho() {
             </Link>
           </div>
 
-          <div className="hidden md:flex space-x-4">
-            <Link to="/login" className="px-4 py-2 text-primary-600 hover:text-primary-700 font-medium">
-              Entrar
-            </Link>
-            <Link to="/cadastro" className="btn-primary">
-              Cadastrar
+          <div className="hidden md:flex">
+            <Link to="/area-cliente" className="flex items-center space-x-2 px-4 py-2 text-primary-600 hover:text-primary-700 font-medium">
+              <UserCircle2 size={20} />
+              <span>Área do Cliente</span>
             </Link>
           </div>
 
@@ -93,12 +96,10 @@ export function Cabecalho() {
             <Link to="/contato" className="block py-2 text-secondary-600 hover:text-primary-600 transition-colors">
               Contato
             </Link>
-            <div className="pt-4 space-y-2 border-t border-secondary-100">
-              <Link to="/login" className="block w-full text-center py-2 text-primary-600 hover:text-primary-700 font-medium">
-                Entrar
-              </Link>
-              <Link to="/cadastro" className="btn-primary block text-center">
-                Cadastrar
+            <div className="pt-4 border-t border-secondary-100">
+              <Link to="/area-cliente" className="flex items-center justify-center gap-2 py-2 text-primary-600 hover:text-primary-700 font-medium">
+                <UserCircle2 size={20} />
+                <span>Área do Cliente</span>
               </Link>
             </div>
           </div>
