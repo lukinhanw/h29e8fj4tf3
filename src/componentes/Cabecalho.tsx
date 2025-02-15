@@ -5,6 +5,13 @@ import { Menu, X, Tv } from 'lucide-react';
 export function Cabecalho() {
   const [menuAberto, setMenuAberto] = React.useState(false);
 
+  const scrollToPlanos = () => {
+    const planosSection = document.getElementById('planos');
+    if (planosSection) {
+      planosSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="bg-white border-b border-secondary-100 sticky top-0 z-50 shadow-sm">
       <nav className="container mx-auto px-4 py-4">
@@ -21,9 +28,12 @@ export function Cabecalho() {
             <Link to="/" className="text-secondary-600 hover:text-primary-600 transition-colors">
               Início
             </Link>
-            <Link to="/planos" className="text-secondary-600 hover:text-primary-600 transition-colors">
+            <button 
+              onClick={scrollToPlanos} 
+              className="text-secondary-600 hover:text-primary-600 transition-colors"
+            >
               Planos
-            </Link>
+            </button>
             <Link to="/servicos" className="text-secondary-600 hover:text-primary-600 transition-colors">
               Serviços
             </Link>
@@ -62,9 +72,15 @@ export function Cabecalho() {
             <Link to="/" className="block py-2 text-secondary-600 hover:text-primary-600 transition-colors">
               Início
             </Link>
-            <Link to="/planos" className="block py-2 text-secondary-600 hover:text-primary-600 transition-colors">
+            <button 
+              onClick={() => {
+                scrollToPlanos();
+                setMenuAberto(false);
+              }}
+              className="block w-full text-left py-2 text-secondary-600 hover:text-primary-600 transition-colors"
+            >
               Planos
-            </Link>
+            </button>
             <Link to="/servicos" className="block py-2 text-secondary-600 hover:text-primary-600 transition-colors">
               Serviços
             </Link>

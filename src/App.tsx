@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Cabecalho } from './componentes/Cabecalho';
 import { Rodape } from './componentes/Rodape';
 import { Inicio } from './paginas/Inicio';
+import { Servicos } from './paginas/Servicos';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Cabecalho />
         <Routes>
           <Route path="/" element={<Inicio />} />
+          <Route path="/servicos" element={<Servicos />} />
         </Routes>
         <Rodape />
       </div>
@@ -18,4 +20,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

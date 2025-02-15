@@ -3,7 +3,11 @@ export interface Plano {
   nome: string;
   preco: number;
   conexoes: number | 'ilimitado' | 'personalizado';
-  recursos: string[];
+  recursos: {
+    titulo: string;
+    descricao: string;
+    icone: string;
+  }[];
   destaque?: boolean;
   precoBase?: number;
 }
@@ -14,4 +18,5 @@ export interface ServicoAdicional {
   descricao: string;
   preco: number;
   icone: string;
+  tipo: 'unico' | 'mensal';
 }

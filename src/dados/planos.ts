@@ -1,14 +1,46 @@
 import { Plano, ServicoAdicional } from '../tipos/planos';
 
 const recursosComuns = [
-  'Canais FHD, HD, SD',
-  'Canais Perperview de Esportes, Reality Shows',
-  'Canais 24h personalizados de desenhos e series e filmes',
-  'Canais em CDN - Alta Performance',
-  'Monitoramento - Página para Conexões Ativas',
-  'EPG - Guia de Programação',
-  'Suporte Prioritário e Avisos',
-  'Filmes & Séries (250.000+ conteúdos)',
+  {
+    titulo: 'Canais em Alta Definição',
+    descricao: 'Canais FHD, HD e SD com qualidade superior',
+    icone: 'Tv'
+  },
+  {
+    titulo: 'Eventos Pay-per-view',
+    descricao: 'Canais Perperview de Esportes e Reality Shows',
+    icone: 'Star'
+  },
+  {
+    titulo: 'Canais 24 Horas',
+    descricao: 'Canais personalizados de desenhos, séries e filmes',
+    icone: 'Clock'
+  },
+  {
+    titulo: 'Alta Performance',
+    descricao: 'Canais em CDN com máxima estabilidade',
+    icone: 'Zap'
+  },
+  {
+    titulo: 'Monitoramento Avançado',
+    descricao: 'Painel para gerenciar conexões ativas',
+    icone: 'Activity'
+  },
+  {
+    titulo: 'Guia de Programação',
+    descricao: 'EPG atualizado com toda a programação',
+    icone: 'Calendar'
+  },
+  {
+    titulo: 'Suporte Premium',
+    descricao: 'Suporte prioritário e avisos importantes',
+    icone: 'HeadSet'
+  },
+  {
+    titulo: 'Biblioteca de Conteúdo',
+    descricao: 'Mais de 250.000 títulos entre filmes e séries',
+    icone: 'Film'
+  }
 ];
 
 export const planos: Plano[] = [
@@ -18,9 +50,12 @@ export const planos: Plano[] = [
     preco: 200.00,
     conexoes: 50,
     recursos: [
-      '50 conexões simultâneas',
-      ...recursosComuns,
-      '10 conexões de brinde'
+      {
+        titulo: 'Conexões Simultâneas',
+        descricao: '50 conexões + 10 de brinde',
+        icone: 'Users'
+      },
+      ...recursosComuns
     ]
   },
   {
@@ -29,24 +64,33 @@ export const planos: Plano[] = [
     preco: 0,
     conexoes: 'personalizado',
     recursos: [
-      'Escolha suas conexões',
-      ...recursosComuns,
-      '20% de conexões de brinde'
+      {
+        titulo: 'Conexões Flexíveis',
+        descricao: 'Escolha a quantidade ideal + 10-15% de brinde',
+        icone: 'Settings'
+      },
+      ...recursosComuns
     ],
     destaque: true,
-    precoBase: 4,  // R$ 4,00 por conexão
+    precoBase: 4,
   },
   {
     id: 3,
     nome: 'Plano Full',
     preco: 4000.00,
-    conexoes: 1000,
+    conexoes: 'ilimitado',
     recursos: [
-      '1000 conexões simultâneas',
+      {
+        titulo: 'Conexões Enterprise',
+        descricao: 'Conexões ilimitadas para seu negócio',
+        icone: 'Building'
+      },
       ...recursosComuns,
-      'Conexões Ilimitadas de Brinde',
-      'Prioridade máxima no suporte',
-      'Painel administrativo exclusivo'
+      {
+        titulo: 'Suporte VIP',
+        descricao: 'Prioridade máxima no atendimento',
+        icone: 'Crown'
+      }
     ]
   }
 ];
@@ -54,30 +98,42 @@ export const planos: Plano[] = [
 export const servicosAdicionais: ServicoAdicional[] = [
   {
     id: 1,
-    nome: 'Instalação Xtream UI',
-    descricao: 'Instalação e configuração completa do Xtream UI em seu servidor',
+    nome: 'Instalação Xtream UI e Xui.One',
+    descricao: 'Instalação e configuração completa do Xtream UI ou Xui.One em seu servidor, com otimizações de performance',
     preco: 149.90,
-    icone: 'Settings'
+    icone: 'Settings',
+    tipo: 'unico'
   },
   {
     id: 2,
-    nome: 'Configuração Linux',
-    descricao: 'Configuração otimizada de servidor Linux para IPTV',
+    nome: 'Configurações Gerais',
+    descricao: 'Configuração otimizada de servidor Linux, firewall, segurança e performance para IPTV',
     preco: 199.90,
-    icone: 'Server'
+    icone: 'Server',
+    tipo: 'unico'
   },
   {
     id: 3,
     nome: 'Load Balancer',
-    descricao: 'Configuração de balanceamento de carga para alta disponibilidade',
+    descricao: 'Configuração de balanceamento de carga, proxy reverso e alta disponibilidade para seu servidor',
     preco: 249.90,
-    icone: 'Network'
+    icone: 'Network',
+    tipo: 'unico'
   },
   {
     id: 4,
     nome: 'Painel Office',
-    descricao: 'Painel administrativo completo para revendedores',
+    descricao: 'Painel administrativo completo para revendedores com gestão de clientes e financeiro',
     preco: 299.90,
-    icone: 'LayoutDashboard'
+    icone: 'LayoutDashboard',
+    tipo: 'mensal'
+  },
+  {
+    id: 5,
+    nome: 'Script de Upload em Massa',
+    descricao: 'Ferramenta automatizada para upload de filmes, séries e canais em lote com organização automática',
+    preco: 179.90,
+    icone: 'Upload',
+    tipo: 'unico'
   }
 ];

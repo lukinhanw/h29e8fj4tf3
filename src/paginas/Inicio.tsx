@@ -1,7 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Tv, Zap, Shield, Users } from 'lucide-react';
+import { Tv, Zap, Shield, Users, Star, Clock, Activity, Calendar, Headset as HeadSet, Film, Settings, Building, Crown, LayoutDashboard } from 'lucide-react';
 import { planos } from '../dados/planos';
+
+const IconeRecurso = ({ nome }: { nome: string }) => {
+  const icones = {
+    Tv,
+    Zap,
+    Shield,
+    Users,
+    Star,
+    Clock,
+    Activity,
+    Calendar,
+    HeadSet,
+    Film,
+    Settings,
+    Building,
+    Crown,
+    LayoutDashboard
+  };
+  
+  const Icone = icones[nome as keyof typeof icones];
+  return Icone ? <Icone className="w-5 h-5 text-primary-600 mr-3 flex-shrink-0" /> : null;
+};
 
 export function Inicio() {
   const [conexoesPersonalizadas, setConexoesPersonalizadas] = useState<number>(100);
@@ -10,6 +32,12 @@ export function Inicio() {
     const planoPersonalizado = planos.find(p => p.id === 2);
     if (!planoPersonalizado?.precoBase) return 0;
     return conexoes * planoPersonalizado.precoBase;
+  };
+
+  const calcularBrindePersonalizado = (conexoes: number): number => {
+    // Calcula um valor aleatório entre 10% e 15%
+    const percentualBrinde = Math.random() * (15 - 10) + 10;
+    return Math.floor(conexoes * (percentualBrinde / 100));
   };
 
   return (
@@ -28,9 +56,9 @@ export function Inicio() {
               Comece agora e ofereça o melhor conteúdo para seus clientes.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link to="/planos" className="btn-primary">
+              <button onClick={() => document.getElementById('planos')?.scrollIntoView({ behavior: 'smooth' })} className="btn-primary">
                 Ver Planos
-              </Link>
+              </button>
               <Link to="/contato" className="btn-secondary bg-white/10 hover:bg-white/20 text-white">
                 Falar com Especialista
               </Link>
@@ -76,7 +104,7 @@ export function Inicio() {
       </section>
 
       {/* Planos */}
-      <section className="py-20 bg-gray-50">
+      <section id="planos" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Escolha o Plano Ideal</h2>
@@ -125,7 +153,7 @@ export function Inicio() {
                         <span className="text-secondary-600 antialiased">/mês</span>
                       </div>
                       <p className="text-sm text-secondary-600 mt-2 antialiased">
-                        {Math.floor(conexoesPersonalizadas * 0.2)} conexões de brinde
+                        {calcularBrindePersonalizado(conexoesPersonalizadas)} conexões de brinde
                       </p>
                     </div>
                   ) : (
@@ -139,20 +167,11 @@ export function Inicio() {
                   <ul className="space-y-4 mb-8 text-left">
                     {plano.recursos.map((recurso, index) => (
                       <li key={index} className="flex items-start">
-                        <svg
-                          className="w-5 h-5 text-primary-600 mr-2 mt-1 flex-shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        {recurso}
+                        <IconeRecurso nome={recurso.icone} />
+                        <div>
+                          <h4 className="font-semibold text-secondary-900">{recurso.titulo}</h4>
+                          <p className="text-sm text-secondary-600">{recurso.descricao}</p>
+                        </div>
                       </li>
                     ))}
                   </ul>
