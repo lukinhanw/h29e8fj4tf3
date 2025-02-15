@@ -91,21 +91,21 @@ export function Inicio() {
                 key={plano.id}
                 className={`card p-8 relative ${
                   plano.destaque
-                    ? 'ring-2 ring-primary-600 scale-105'
+                    ? 'bg-gradient-to-br from-white to-primary-50 border-primary-200'
                     : ''
                 }`}
               >
                 {plano.destaque && (
-                  <span className="bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-medium absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-medium absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap">
                     Mais Popular
                   </span>
                 )}
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold mb-4">{plano.nome}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-secondary-900">{plano.nome}</h3>
                   {plano.conexoes === 'personalizado' ? (
                     <div className="mb-6">
                       <div className="mb-4">
-                        <label htmlFor="conexoes" className="block text-sm font-medium text-secondary-600 mb-2">
+                        <label htmlFor="conexoes" className="block text-sm font-medium text-secondary-700 mb-2 antialiased">
                           Número de Conexões
                         </label>
                         <input
@@ -115,16 +115,16 @@ export function Inicio() {
                           max="999"
                           value={conexoesPersonalizadas}
                           onChange={(e) => setConexoesPersonalizadas(Number(e.target.value))}
-                          className="input-field text-center"
+                          className="input-field text-center font-medium text-secondary-900"
                         />
                       </div>
                       <div>
-                        <span className="text-4xl font-bold">
+                        <span className="text-4xl font-bold text-secondary-900 antialiased">
                           R$ {calcularPrecoPersonalizado(conexoesPersonalizadas).toFixed(2)}
                         </span>
-                        <span className="text-secondary-600">/mês</span>
+                        <span className="text-secondary-600 antialiased">/mês</span>
                       </div>
-                      <p className="text-sm text-secondary-600 mt-2">
+                      <p className="text-sm text-secondary-600 mt-2 antialiased">
                         {Math.floor(conexoesPersonalizadas * 0.2)} conexões de brinde
                       </p>
                     </div>
