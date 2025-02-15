@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Cabecalho } from './componentes/Cabecalho';
 import { Rodape } from './componentes/Rodape';
 import { Inicio } from './paginas/Inicio';
-import { Servicos } from './paginas/Servicos';
-import { Checkout } from './paginas/Checkout';
+import { Planos } from './paginas/Planos';
 
 function App() {
   return (
@@ -13,8 +12,7 @@ function App() {
         <Cabecalho />
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route path="/servicos" element={<Servicos />} />
-          <Route path="/planos/:id" element={<Checkout />} />
+          <Route path="/planos" element={<Planos />} />
         </Routes>
         <Rodape />
       </div>

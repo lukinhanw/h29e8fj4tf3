@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { IMask } from 'imask';
+import IMask from 'imask';
 
 interface MaskedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   mask: string;
