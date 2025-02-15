@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-secondary-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg 
+           hover:bg-primary-700 transition-colors shadow-lg shadow-primary-500/20
+           active:shadow-sm active:translate-y-0.5 duration-150;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-secondary-100 text-secondary-700 font-semibold rounded-lg 
+           hover:bg-secondary-200 transition-colors shadow-md
+           active:shadow-sm active:translate-y-0.5 duration-150;
+  }
+
+  .btn-success {
+    @apply px-6 py-3 bg-success-600 text-white font-semibold rounded-lg 
+           hover:bg-success-700 transition-colors shadow-lg shadow-success-500/20
+           active:shadow-sm active:translate-y-0.5 duration-150;
+  }
+
+  .btn-warning {
+    @apply px-6 py-3 bg-warning-500 text-white font-semibold rounded-lg 
+           hover:bg-warning-600 transition-colors shadow-lg shadow-warning-400/20
+           active:shadow-sm active:translate-y-0.5 duration-150;
+  }
+
+  .btn-danger {
+    @apply px-6 py-3 bg-danger-600 text-white font-semibold rounded-lg 
+           hover:bg-danger-700 transition-colors shadow-lg shadow-danger-500/20
+           active:shadow-sm active:translate-y-0.5 duration-150;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-secondary-200 rounded-lg 
+           focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           bg-white shadow-sm placeholder-secondary-400;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-xl shadow-secondary-900/5 
+           border border-secondary-100/50 backdrop-blur-sm;
+  }
+}
