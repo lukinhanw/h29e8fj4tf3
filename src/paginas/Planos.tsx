@@ -72,10 +72,10 @@ export function Planos() {
       <section className="bg-gradient-to-r from-secondary-950 to-primary-950 text-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
               Planos Flexíveis para Seu Negócio
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-300 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
               Escolha o plano ideal para suas necessidades e comece a oferecer o melhor conteúdo IPTV para seus clientes.
             </p>
           </div>
@@ -90,23 +90,23 @@ export function Planos() {
             {planos.map((plano) => (
               <div
                 key={plano.id}
-                className={`card p-8 relative transform transition-all duration-300 hover:scale-105 ${
+                className={`card p-8 relative transition-shadow duration-300 ${
                   plano.destaque
                     ? 'bg-gradient-to-br from-white to-primary-50 border-primary-200 shadow-xl'
                     : 'hover:shadow-xl'
                 }`}
               >
                 {plano.destaque && (
-                  <span className="bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-medium absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                  <span className="bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-medium absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                     Mais Popular
                   </span>
                 )}
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold mb-4 text-secondary-900">{plano.nome}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-secondary-900 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">{plano.nome}</h3>
                   {plano.conexoes === 'personalizado' ? (
                     <div className="mb-6">
                       <div className="mb-4">
-                        <label htmlFor="conexoes" className="block text-sm font-medium text-secondary-700 mb-2 antialiased">
+                        <label htmlFor="conexoes" className="block text-sm font-medium text-secondary-700 mb-2 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                           Número de Conexões
                         </label>
                         <input
@@ -116,25 +116,25 @@ export function Planos() {
                           max="999"
                           value={conexoesPersonalizadas}
                           onChange={(e) => setConexoesPersonalizadas(Number(e.target.value))}
-                          className="input-field text-center font-medium text-secondary-900"
+                          className="input-field text-center font-medium text-secondary-900 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
                         />
                       </div>
                       <div>
-                        <span className="text-4xl font-bold text-secondary-900 antialiased">
+                        <span className="text-4xl font-bold text-secondary-900 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                           R$ {calcularPrecoPersonalizado(conexoesPersonalizadas).toFixed(2)}
                         </span>
-                        <span className="text-secondary-600 antialiased">/mês</span>
+                        <span className="text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">/mês</span>
                       </div>
-                      <p className="text-sm text-secondary-600 mt-2 antialiased">
+                      <p className="text-sm text-secondary-600 mt-2 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                         {calcularBrindePersonalizado(conexoesPersonalizadas)} conexões de brinde
                       </p>
                     </div>
                   ) : (
                     <div className="mb-6">
-                      <span className="text-4xl font-bold text-secondary-900">
+                      <span className="text-4xl font-bold text-secondary-900 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                         R$ {plano.preco.toFixed(2)}
                       </span>
-                      <span className="text-secondary-600">/mês</span>
+                      <span className="text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">/mês</span>
                     </div>
                   )}
                   <ul className="space-y-4 mb-8 text-left">
@@ -142,8 +142,8 @@ export function Planos() {
                       <li key={index} className="flex items-start">
                         <IconeRecurso nome={recurso.icone} />
                         <div>
-                          <h4 className="font-semibold text-secondary-900">{recurso.titulo}</h4>
-                          <p className="text-sm text-secondary-600">{recurso.descricao}</p>
+                          <h4 className="font-semibold text-secondary-900 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">{recurso.titulo}</h4>
+                          <p className="text-sm text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">{recurso.descricao}</p>
                         </div>
                       </li>
                     ))}
@@ -155,7 +155,7 @@ export function Planos() {
                     }}
                     className={`w-full ${
                       plano.destaque ? 'btn-primary' : 'btn-secondary'
-                    }`}
+                    } [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]`}
                   >
                     Contratar Agora
                   </button>
@@ -166,14 +166,14 @@ export function Planos() {
 
           {/* FAQ */}
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Perguntas Frequentes</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Perguntas Frequentes</h2>
             <div className="space-y-6">
               <div className="card p-6">
                 <div className="flex items-start">
                   <HelpCircle className="w-6 h-6 text-primary-600 mr-3 flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Como funciona o período de teste?</h3>
-                    <p className="text-secondary-600">
+                    <h3 className="font-semibold text-lg mb-2 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Como funciona o período de teste?</h3>
+                    <p className="text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                       Oferecemos um período de teste de 24 horas para que você possa avaliar a qualidade do nosso serviço antes de fazer a contratação.
                     </p>
                   </div>
@@ -183,8 +183,8 @@ export function Planos() {
                 <div className="flex items-start">
                   <HelpCircle className="w-6 h-6 text-primary-600 mr-3 flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Posso mudar de plano depois?</h3>
-                    <p className="text-secondary-600">
+                    <h3 className="font-semibold text-lg mb-2 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Posso mudar de plano depois?</h3>
+                    <p className="text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                       Sim, você pode fazer upgrade ou downgrade do seu plano a qualquer momento, e o valor será ajustado proporcionalmente.
                     </p>
                   </div>
@@ -194,8 +194,8 @@ export function Planos() {
                 <div className="flex items-start">
                   <HelpCircle className="w-6 h-6 text-primary-600 mr-3 flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Qual a qualidade dos canais?</h3>
-                    <p className="text-secondary-600">
+                    <h3 className="font-semibold text-lg mb-2 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Qual a qualidade dos canais?</h3>
+                    <p className="text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                       Oferecemos canais em qualidade SD, HD e FHD, com servidores otimizados para streaming sem travamentos.
                     </p>
                   </div>
@@ -210,10 +210,10 @@ export function Planos() {
       {mostrarFormulario && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl p-8 max-w-md w-full">
-            <h3 className="text-2xl font-bold mb-6">Solicitar Contratação</h3>
+            <h3 className="text-2xl font-bold mb-6 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Solicitar Contratação</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="nome" className="block text-sm font-medium text-secondary-700 mb-1">
+                <label htmlFor="nome" className="block text-sm font-medium text-secondary-700 mb-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                   Nome Completo
                 </label>
                 <input
@@ -221,12 +221,12 @@ export function Planos() {
                   id="nome"
                   value={formData.nome}
                   onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                  className="input-field"
+                  className="input-field [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                   E-mail
                 </label>
                 <input
@@ -234,12 +234,12 @@ export function Planos() {
                   id="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="input-field"
+                  className="input-field [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="telefone" className="block text-sm font-medium text-secondary-700 mb-1">
+                <label htmlFor="telefone" className="block text-sm font-medium text-secondary-700 mb-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                   Telefone
                 </label>
                 <MaskedInput
@@ -247,12 +247,12 @@ export function Planos() {
                   id="telefone"
                   value={formData.telefone}
                   onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                  className="input-field"
+                  className="input-field [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="empresa" className="block text-sm font-medium text-secondary-700 mb-1">
+                <label htmlFor="empresa" className="block text-sm font-medium text-secondary-700 mb-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                   Empresa (opcional)
                 </label>
                 <input
@@ -260,18 +260,18 @@ export function Planos() {
                   id="empresa"
                   value={formData.empresa}
                   onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
-                  className="input-field"
+                  className="input-field [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
                 />
               </div>
               <div className="flex gap-4 mt-6">
                 <button
                   type="button"
                   onClick={() => setMostrarFormulario(false)}
-                  className="btn-secondary flex-1"
+                  className="btn-secondary flex-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
                 >
                   Cancelar
                 </button>
-                <button type="submit" className="btn-primary flex-1">
+                <button type="submit" className="btn-primary flex-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
                   Enviar
                 </button>
               </div>
@@ -281,4 +281,4 @@ export function Planos() {
       )}
     </div>
   );
-} 
+}

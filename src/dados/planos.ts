@@ -113,14 +113,6 @@ export const servicosAdicionais: ServicoAdicional[] = [
     tipo: 'unico'
   },
   {
-    id: 3,
-    nome: 'Load Balancer',
-    descricao: 'Configuração de balanceamento de carga, proxy reverso e alta disponibilidade para seu servidor',
-    preco: 249.90,
-    icone: 'Network',
-    tipo: 'unico'
-  },
-  {
     id: 4,
     nome: 'Painel Office',
     descricao: 'Painel administrativo completo para revendedores com gestão de clientes e financeiro',

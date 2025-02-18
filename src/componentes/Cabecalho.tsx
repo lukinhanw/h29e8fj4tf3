@@ -33,12 +33,9 @@ export function Cabecalho() {
             <Link to="/" className="text-secondary-600 hover:text-primary-600 transition-colors">
               Início
             </Link>
-            <button 
-              onClick={scrollToPlanos} 
-              className="text-secondary-600 hover:text-primary-600 transition-colors"
-            >
+            <Link to="/planos" className="text-secondary-600 hover:text-primary-600 transition-colors">
               Planos
-            </button>
+            </Link>
             <Link to="/servicos" className="text-secondary-600 hover:text-primary-600 transition-colors">
               Serviços
             </Link>
@@ -75,15 +72,9 @@ export function Cabecalho() {
             <Link to="/" className="block py-2 text-secondary-600 hover:text-primary-600 transition-colors">
               Início
             </Link>
-            <button 
-              onClick={() => {
-                scrollToPlanos();
-                setMenuAberto(false);
-              }}
-              className="block w-full text-left py-2 text-secondary-600 hover:text-primary-600 transition-colors"
-            >
+            <Link to="/planos" className="block py-2 text-secondary-600 hover:text-primary-600 transition-colors">
               Planos
-            </button>
+            </Link>
             <Link to="/servicos" className="block py-2 text-secondary-600 hover:text-primary-600 transition-colors">
               Serviços
             </Link>
