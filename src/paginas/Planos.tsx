@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom';
 import { 
   Tv, Zap, Shield, Users, Star, Clock, Activity, 
   Calendar, Headset as HeadSet, Film, Settings, 
-  Building, Crown, LayoutDashboard, Check, HelpCircle 
+  Building, Crown, LayoutDashboard, Check, HelpCircle,
+  ChevronDown, ChevronUp 
 } from 'lucide-react';
 import { planos } from '../dados/planos';
 import { MaskedInput } from '../componentes/MaskedInput';
+import { CONTATO } from '../config/contato';
+import { useScrollToTop } from '../hooks/useScrollToTop';
+import { Helmet } from 'react-helmet';
 
 const IconeRecurso = ({ nome }: { nome: string }) => {
   const icones = {
@@ -30,16 +34,16 @@ const IconeRecurso = ({ nome }: { nome: string }) => {
   return Icone ? <Icone className="w-5 h-5 text-primary-600 mr-3 flex-shrink-0" /> : null;
 };
 
+// Adicione o tipo FAQ antes da função principal
+type FAQ = {
+  pergunta: string;
+  resposta: string | React.ReactNode;
+};
+
 export function Planos() {
+  useScrollToTop();
   const [conexoesPersonalizadas, setConexoesPersonalizadas] = useState<number>(100);
-  const [planoSelecionado, setPlanoSelecionado] = useState<number | null>(null);
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    telefone: '',
-    empresa: ''
-  });
+  const [faqAberta, setFaqAberta] = useState<number | null>(null);
 
   const calcularPrecoPersonalizado = (conexoes: number): number => {
     const planoPersonalizado = planos.find(p => p.id === 2);
@@ -52,22 +56,119 @@ export function Planos() {
     return Math.floor(conexoes * (percentualBrinde / 100));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Aqui você implementaria a lógica de envio do formulário
-    console.log('Dados do formulário:', formData);
-    setMostrarFormulario(false);
-    // Resetar formulário
-    setFormData({
-      nome: '',
-      email: '',
-      telefone: '',
-      empresa: ''
-    });
+  // Função para abrir o WhatsApp com a mensagem de contratação
+  const handleContratarAgora = (plano: any) => {
+    const message = CONTATO.WHATSAPP.MENSAGEM_CONTRATO(plano.nome);
+    window.open(`https://wa.me/${CONTATO.WHATSAPP.NUMERO}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  const faqs: FAQ[] = [
+    {
+      pergunta: "Como funcionam as conexões?",
+      resposta: (
+        <div className="space-y-4">
+          <ul className="text-secondary-600 space-y-2">
+            <li>• Cada conexão representa um canal ativo em seu servidor</li>
+            <li>• Por exemplo: se você ativar o canal Globo SP HD no seu painel, isso consome 1 conexão, independente do número de clientes assistindo</li>
+            <li>• O número de usuários finais assistindo não afeta o consumo de conexões, pois você está fazendo restream do canal</li>
+            <li>• Se você tem 50 conexões, significa que pode ter 50 canais diferentes ativos simultaneamente em seu servidor</li>
+            <li>• Você gerencia quais canais quer manter ativos através do seu painel de controle</li>
+          </ul>
+          
+          <div className="bg-primary-50 p-4 rounded-lg">
+            <p className="font-medium text-primary-900 mb-2">Exemplos práticos:</p>
+            <ul className="text-secondary-600 space-y-2">
+              <li>• Se você tem 100 clientes assistindo o mesmo canal (ex: Globo SP HD), você consome apenas 1 conexão</li>
+              <li>• Se você tem 10 clientes assistindo 10 canais diferentes, você consome 10 conexões</li>
+              <li>• Se nenhum cliente está assistindo um canal específico, você pode desativá-lo para economizar conexões</li>
+            </ul>
+          </div>
+
+          <div className="bg-secondary-50 p-4 rounded-lg">
+            <p className="font-medium text-secondary-900 mb-2">Recurso OnDemand:</p>
+            <ul className="text-secondary-600 space-y-2">
+              <li>• Painéis modernos oferecem o recurso de OnDemand (sob demanda)</li>
+              <li>• Com OnDemand, o canal só é ativado quando algum cliente solicita</li>
+              <li>• Quando o último cliente para de assistir, o canal é automaticamente desligado, economizando conexões</li>
+              <li>• Este recurso permite um melhor aproveitamento do seu plano de conexões</li>
+              <li>• A disponibilidade depende do painel de controle que você utiliza (Xtream UI ou similar)</li>
+            </ul>
+          </div>
+        </div>
+      )
+    },
+    {
+      pergunta: "O que fazer após o pagamento?",
+      resposta: "Após efetuar o pagamento, confirme conosco via WhatsApp ou email e retornaremos o mais breve possível."
+    },
+    {
+      pergunta: "Quais são os termos e condições de uso do restreaming?",
+      resposta: (
+        <ul className="text-secondary-600 space-y-2">
+          <li>1. Adicione apenas ao seu servidor, não venda diretamente aos clientes.</li>
+          <li>2. Nunca use mais conexões do que o permitido.</li>
+          <li>3. Nunca compartilhe nossas conexões diretas publicamente ou venda diretamente.</li>
+          <li>4. A violação dessas condições pode resultar no bloqueio permanente da sua linha.</li>
+        </ul>
+      )
+    },
+    {
+      pergunta: "Por que meu link não está funcionando após o pagamento?",
+      resposta: "Pode ser que o IP do seu servidor esteja bloqueado em nosso servidor. Entre em contato conosco via WhatsApp ou email e envie o endereço IP do seu servidor para ser incluído na lista de permissões."
+    },
+    {
+      pergunta: "Como começar com o restream?",
+      resposta: "Entre em contato via WhatsApp, solicite um teste e, se gostar, peça as opções de pagamento, efetue o pagamento e comece a usar. Todo o processo é feito pelo WhatsApp."
+    },
+    {
+      pergunta: "Como funciona o período de teste?",
+      resposta: "Oferecemos um período de teste de 24 horas para que você possa avaliar a qualidade do nosso serviço antes de fazer a contratação."
+    },
+    {
+      pergunta: "Posso mudar de plano depois?",
+      resposta: "Sim, você pode fazer upgrade ou downgrade do seu plano a qualquer momento, e o valor será ajustado proporcionalmente."
+    },
+    {
+      pergunta: "Qual a qualidade dos canais?",
+      resposta: "Oferecemos canais em qualidade SD, HD e FHD, com servidores otimizados para streaming sem travamentos."
+    }
+  ];
+
+  const toggleFaq = (index: number) => {
+    setFaqAberta(faqAberta === index ? null : index);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <Helmet>
+      <title>Planos IPTV Pro | Melhor Serviço de Restream IPTV</title>
+      <meta name="description" content="Escolha o plano ideal de IPTV para seu negócio. Oferecemos planos flexíveis com conexões ilimitadas, suporte 24/7 e qualidade HD/FHD. Preços a partir de R$ 99,90." />
+      <meta name="keywords" content="iptv, restream, planos iptv, servidor iptv, conexões iptv, canais hd, streaming profissional, iptv brasil, servidor streaming" />
+      <link rel="canonical" href={`https://iptvpro.com.br${location.pathname}`} />
+      
+      {/* Open Graph */}
+      <meta property="og:title" content="Planos IPTV Pro | Melhor Serviço de Restream IPTV" />
+      <meta property="og:description" content="Escolha o plano ideal de IPTV para seu negócio. Oferecemos planos flexíveis com conexões ilimitadas, suporte 24/7 e qualidade HD/FHD." />
+      <meta property="og:url" content={`https://iptvpro.com.br${location.pathname}`} />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content="https://iptvpro.com.br/og-image.jpg" />
+      
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Planos IPTV Pro | Melhor Serviço de Restream IPTV" />
+      <meta name="twitter:description" content="Escolha o plano ideal de IPTV para seu negócio. Oferecemos planos flexíveis com conexões ilimitadas, suporte 24/7 e qualidade HD/FHD." />
+      <meta name="twitter:image" content="https://iptvpro.com.br/twitter-card.jpg" />
+      
+      {/* Metadados adicionais */}
+      <meta name="robots" content="index, follow" />
+      <meta name="author" content="IPTV Pro" />
+      <meta name="revisit-after" content="7 days" />
+      <meta name="language" content="pt-BR" />
+      <meta name="rating" content="general" />
+    </Helmet>
+
+    <main className="min-h-screen bg-gray-50" itemScope itemType="https://schema.org/Product">
+      <meta itemProp="name" content="Planos IPTV Pro" />
+      <meta itemProp="description" content="Serviço profissional de restream IPTV com planos flexíveis" />
       {/* Header da página */}
       <section className="bg-gradient-to-r from-secondary-950 to-primary-950 text-white py-20">
         <div className="container mx-auto px-4">
@@ -149,15 +250,12 @@ export function Planos() {
                     ))}
                   </ul>
                   <button
-                    onClick={() => {
-                      setPlanoSelecionado(plano.id);
-                      setMostrarFormulario(true);
-                    }}
+                    onClick={() => handleContratarAgora(plano)}
                     className={`w-full ${
                       plano.destaque ? 'btn-primary' : 'btn-secondary'
                     } [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]`}
                   >
-                    Contratar Agora
+                    Testar Agora
                   </button>
                 </div>
               </div>
@@ -166,119 +264,43 @@ export function Planos() {
 
           {/* FAQ */}
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Perguntas Frequentes</h2>
-            <div className="space-y-6">
-              <div className="card p-6">
-                <div className="flex items-start">
-                  <HelpCircle className="w-6 h-6 text-primary-600 mr-3 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Como funciona o período de teste?</h3>
-                    <p className="text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
-                      Oferecemos um período de teste de 24 horas para que você possa avaliar a qualidade do nosso serviço antes de fazer a contratação.
-                    </p>
+            <h2 className="text-3xl font-bold text-center mb-12 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
+              Perguntas Frequentes
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="card overflow-hidden">
+                  <button
+                    onClick={() => toggleFaq(index)}
+                    className="w-full p-6 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-start gap-3">
+                      <HelpCircle className="w-6 h-6 text-primary-600 flex-shrink-0" />
+                      <h3 className="font-semibold text-lg text-secondary-900 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
+                        {faq.pergunta}
+                      </h3>
+                    </div>
+                    {faqAberta === index ? (
+                      <ChevronUp className="w-5 h-5 text-secondary-600" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-secondary-600" />
+                    )}
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${
+                      faqAberta === index ? 'max-h-[800px]' : 'max-h-0'
+                    }`}
+                  >
+                    <div className="p-6 pt-0 text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
+                      {faq.resposta}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="card p-6">
-                <div className="flex items-start">
-                  <HelpCircle className="w-6 h-6 text-primary-600 mr-3 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Posso mudar de plano depois?</h3>
-                    <p className="text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
-                      Sim, você pode fazer upgrade ou downgrade do seu plano a qualquer momento, e o valor será ajustado proporcionalmente.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="card p-6">
-                <div className="flex items-start">
-                  <HelpCircle className="w-6 h-6 text-primary-600 mr-3 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Qual a qualidade dos canais?</h3>
-                    <p className="text-secondary-600 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
-                      Oferecemos canais em qualidade SD, HD e FHD, com servidores otimizados para streaming sem travamentos.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
-
-      {/* Modal de Formulário */}
-      {mostrarFormulario && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl p-8 max-w-md w-full">
-            <h3 className="text-2xl font-bold mb-6 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">Solicitar Contratação</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="nome" className="block text-sm font-medium text-secondary-700 mb-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
-                  Nome Completo
-                </label>
-                <input
-                  type="text"
-                  id="nome"
-                  value={formData.nome}
-                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                  className="input-field [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
-                  E-mail
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="input-field [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="telefone" className="block text-sm font-medium text-secondary-700 mb-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
-                  Telefone
-                </label>
-                <MaskedInput
-                  mask="(00) 00000-0000"
-                  id="telefone"
-                  value={formData.telefone}
-                  onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                  className="input-field [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="empresa" className="block text-sm font-medium text-secondary-700 mb-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
-                  Empresa (opcional)
-                </label>
-                <input
-                  type="text"
-                  id="empresa"
-                  value={formData.empresa}
-                  onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
-                  className="input-field [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
-                />
-              </div>
-              <div className="flex gap-4 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setMostrarFormulario(false)}
-                  className="btn-secondary flex-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]"
-                >
-                  Cancelar
-                </button>
-                <button type="submit" className="btn-primary flex-1 [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale]">
-                  Enviar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-    </div>
+    </main>
   );
 }

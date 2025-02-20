@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /area-cliente/
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://iptvpro.com.br/sitemap.xml 

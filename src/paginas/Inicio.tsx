@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Tv, Zap, Shield, Users, Star, Clock, Activity, Calendar, Headset as HeadSet, Film, Settings, Building, Crown, LayoutDashboard } from 'lucide-react';
 import { planos } from '../dados/planos';
+import { CONTATO } from '../config/contato';
+import { useScrollToTop } from '../hooks/useScrollToTop';
+import { Helmet } from 'react-helmet';
 
 const IconeRecurso = ({ nome }: { nome: string }) => {
   const icones = {
@@ -26,6 +29,7 @@ const IconeRecurso = ({ nome }: { nome: string }) => {
 };
 
 export function Inicio() {
+  useScrollToTop();
   const [conexoesPersonalizadas, setConexoesPersonalizadas] = useState<number>(100);
 
   const calcularPrecoPersonalizado = (conexoes: number): number => {
@@ -40,8 +44,72 @@ export function Inicio() {
     return Math.floor(conexoes * (percentualBrinde / 100));
   };
 
+  const handleTesteGratis = () => {
+    const message = CONTATO.WHATSAPP.MENSAGEM_TESTE_GRATIS;
+    window.open(`https://wa.me/${CONTATO.WHATSAPP.NUMERO}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  const handleContratarAgora = (plano: any) => {
+    const message = CONTATO.WHATSAPP.MENSAGEM_CONTRATO(plano.nome);
+    window.open(`https://wa.me/${CONTATO.WHATSAPP.NUMERO}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <Helmet>
+      <title>IPTV Pro | Melhor Solução para Servidor IPTV no Brasil</title>
+      <meta name="description" content="Transforme seu servidor em uma central de entretenimento com o IPTV Pro. Oferecemos fontes de canais estáveis e de alta qualidade, suporte 24/7 e tecnologia de ponta." />
+      <meta name="keywords" content="iptv, servidor iptv, canais hd, streaming, restream, servidor de streaming, iptv brasil, tv online, streaming profissional" />
+      <link rel="canonical" href="https://iptvpro.com.br" />
+      
+      {/* Open Graph */}
+      <meta property="og:title" content="IPTV Pro | Melhor Solução para Servidor IPTV no Brasil" />
+      <meta property="og:description" content="Transforme seu servidor em uma central de entretenimento com o IPTV Pro. Oferecemos fontes de canais estáveis e de alta qualidade." />
+      <meta property="og:url" content="https://iptvpro.com.br" />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content="https://iptvpro.com.br/og-image.jpg" />
+      
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="IPTV Pro | Melhor Solução para Servidor IPTV no Brasil" />
+      <meta name="twitter:description" content="Transforme seu servidor em uma central de entretenimento com o IPTV Pro. Oferecemos fontes de canais estáveis e de alta qualidade." />
+      <meta name="twitter:image" content="https://iptvpro.com.br/twitter-card.jpg" />
+      
+      {/* Metadados adicionais */}
+      <meta name="robots" content="index, follow" />
+      <meta name="author" content="IPTV Pro" />
+      <meta name="revisit-after" content="7 days" />
+      <meta name="language" content="pt-BR" />
+      <meta name="rating" content="general" />
+      
+      {/* Dados estruturados */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "IPTV Pro",
+          "description": "Sua solução completa para fontes de canais IPTV",
+          "url": "https://iptvpro.com.br",
+          "logo": "https://iptvpro.com.br/logo.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": CONTATO.TELEFONE,
+            "contactType": "customer service",
+            "email": CONTATO.EMAIL,
+            "areaServed": "BR",
+            "availableLanguage": "Portuguese"
+          },
+          "sameAs": [
+            "https://facebook.com/iptvpro",
+            "https://instagram.com/iptvpro",
+            "https://linkedin.com/company/iptvpro"
+          ]
+        })}
+      </script>
+    </Helmet>
+
+    <main className="flex flex-col min-h-screen" itemScope itemType="https://schema.org/WebSite">
+      <meta itemProp="name" content="IPTV Pro" />
+      <meta itemProp="description" content="Sua solução completa para fontes de canais IPTV" />
       {/* Banner Principal */}
       <section className="relative bg-gradient-to-r from-secondary-950 to-primary-950 text-white">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-4.0.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80')] mix-blend-overlay opacity-20 bg-cover bg-center"></div>
@@ -62,6 +130,9 @@ export function Inicio() {
               <Link to="/contato" className="btn-secondary bg-white/10 hover:bg-white/20 text-white">
                 Falar com Especialista
               </Link>
+              <button onClick={handleTesteGratis} className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300 animate-pulse">
+                Teste Grátis
+              </button>
             </div>
           </div>
         </div>
@@ -175,20 +246,20 @@ export function Inicio() {
                       </li>
                     ))}
                   </ul>
-                  <Link
-                    to={`/planos/${plano.id}`}
+                  <button
+                    onClick={() => handleContratarAgora(plano)}
                     className={`w-full ${
                       plano.destaque ? 'btn-primary' : 'btn-secondary'
                     }`}
                   >
                     Contratar Agora
-                  </Link>
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
