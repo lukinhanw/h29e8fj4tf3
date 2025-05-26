@@ -17,19 +17,9 @@ const recursosComuns = [
     icone: 'Clock'
   },
   {
-    titulo: 'Alta Performance',
-    descricao: 'Canais em CDN com máxima estabilidade',
-    icone: 'Zap'
-  },
-  {
     titulo: 'Monitoramento Avançado',
     descricao: 'Painel para gerenciar conexões ativas',
     icone: 'Activity'
-  },
-  {
-    titulo: 'Guia de Programação',
-    descricao: 'EPG atualizado com toda a programação',
-    icone: 'Calendar'
   },
   {
     titulo: 'Suporte Premium',
@@ -47,7 +37,7 @@ export const planos: Plano[] = [
   {
     id: 1,
     nome: 'Plano 50 Conexões',
-    preco: 200.00,
+    preco: 500.00,
     conexoes: 50,
     recursos: [
       {

@@ -17,7 +17,7 @@ export function Checkout() {
     cardCvv: '',
     termos: false
   });
-  const [conexoesPersonalizadas, setConexoesPersonalizadas] = useState(100);
+  const [conexoesPersonalizadas, setConexoesPersonalizadas] = useState(25);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -33,7 +33,39 @@ export function Checkout() {
 
   const calcularPrecoFinal = () => {
     if (plano.conexoes === 'personalizado') {
-      return conexoesPersonalizadas * (plano.precoBase || 0);
+      // Tabela de preços por faixa
+      const faixas = [
+        { conexoes: 25, preco: 250.00 },
+        { conexoes: 50, preco: 500.00 },
+        { conexoes: 100, preco: 800.00 },
+        { conexoes: 200, preco: 1500.00 },
+        { conexoes: 400, preco: 2800.00 },
+        { conexoes: Infinity, preco: 4000.00 }
+      ];
+
+      // Encontra a faixa correspondente
+      for (let i = 0; i < faixas.length; i++) {
+        if (conexoesPersonalizadas <= faixas[i].conexoes) {
+          if (i === 0) {
+            // Primeira faixa: preço proporcional de 0 até 25
+            return (conexoesPersonalizadas / 25) * 250.00;
+          } else if (i === faixas.length - 1) {
+            // Última faixa: preço fixo para ilimitado
+            return 4000.00;
+          } else {
+            // Faixas intermediárias: interpolação linear
+            const faixaAnterior = faixas[i - 1];
+            const faixaAtual = faixas[i];
+            const conexoesNaFaixa = conexoesPersonalizadas - faixaAnterior.conexoes;
+            const conexoesTotaisFaixa = faixaAtual.conexoes - faixaAnterior.conexoes;
+            const diferencaPreco = faixaAtual.preco - faixaAnterior.preco;
+            
+            return faixaAnterior.preco + (conexoesNaFaixa / conexoesTotaisFaixa) * diferencaPreco;
+          }
+        }
+      }
+      
+      return 4000.00; // Fallback
     }
     return plano.preco;
   };
@@ -193,7 +225,7 @@ export function Checkout() {
                         <input
                           type="number"
                           id="conexoes"
-                          min="50"
+                          min="25"
                           max="999"
                           value={conexoesPersonalizadas}
                           onChange={(e) => setConexoesPersonalizadas(Number(e.target.value))}
